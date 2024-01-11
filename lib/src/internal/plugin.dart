@@ -73,6 +73,16 @@ class PhotoManagerPlugin with BasePlugin, IosPlugin, AndroidPlugin {
     );
   }
 
+
+  Future<String?> getPlatformVersion() async {
+    if (Platform.isWindows) {
+      return _channel.invokeMethod<String>(
+        PMConstants.mGetPlatformVersion,
+      );
+    }
+    return null;
+  }
+
   Future<PermissionState> requestPermissionExtend(
     PermissionRequestOption requestOption,
   ) async {
@@ -425,8 +435,8 @@ class PhotoManagerPlugin with BasePlugin, IosPlugin, AndroidPlugin {
     AssetEntity entity, {
     int subtype = 0,
   }) async {
-    assert(Platform.isAndroid || Platform.isIOS || Platform.isMacOS);
-    if (Platform.isAndroid) {
+    assert(Platform.isAndroid || Platform.isIOS || Platform.isMacOS || Platform.isWindows);
+    if (Platform.isAndroid || Platform.isWindows) {
       return entity.title!;
     }
     if (Platform.isIOS || Platform.isMacOS) {
@@ -590,6 +600,7 @@ class PhotoManagerPlugin with BasePlugin, IosPlugin, AndroidPlugin {
     PMFilter? filterOption,
   }) {
     final filter = filterOption ?? PMFilter.defaultValue();
+    // todo if file name is not utf-8, error will occur
     return _channel.invokeMethod<Map>(PMConstants.mGetAssetsByRange, {
       'type': type.value,
       'start': start,

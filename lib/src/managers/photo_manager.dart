@@ -99,6 +99,10 @@ class PhotoManager {
     );
   }
 
+  static Future<String?> getPlatformVersion() async {
+    return await plugin.getPlatformVersion();
+  }
+
   /// Controls whether the plugin should log messages to the console during operation.
   static Future<void> setLog(bool isLog) => plugin.setLog(isLog);
 

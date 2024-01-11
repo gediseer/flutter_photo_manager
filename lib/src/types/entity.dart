@@ -695,7 +695,7 @@ class AssetEntity {
   }
 
   bool get _platformMatched =>
-      Platform.isIOS || Platform.isMacOS || Platform.isAndroid;
+      Platform.isIOS || Platform.isMacOS || Platform.isAndroid || Platform.isWindows;
 
   Future<File?> _getFile({
     bool isOrigin = false,
@@ -709,12 +709,19 @@ class AssetEntity {
     if (!_platformMatched) {
       return null;
     }
-    final String? path = await plugin.getFullFile(
-      id,
-      isOrigin: isOrigin,
-      progressHandler: progressHandler,
-      subtype: subtype,
-    );
+    final String? path;
+    if(Platform.isWindows) {
+      // todo windows side just use the title as absolute path
+       path = title;
+    } else {
+      path = await plugin.getFullFile(
+        id,
+        isOrigin: isOrigin,
+        progressHandler: progressHandler,
+        subtype: subtype,
+      );
+    }
+
     if (path == null) {
       return null;
     }

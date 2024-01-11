@@ -158,6 +158,9 @@ class CustomColumns {
       return 'date_added';
     } else if (isDarwin) {
       return 'creationDate';
+    } else if (Platform.isWindows) {
+      // getAssetCount default filter
+      return '';
     } else {
       throw UnsupportedError('Unsupported platform with createDate');
     }

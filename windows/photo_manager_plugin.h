@@ -5,11 +5,15 @@
 #include <flutter/plugin_registrar_windows.h>
 
 #include <memory>
+#include <flutter/encodable_value.h>
 
 namespace photo_manager {
 
 class PhotoManagerPlugin : public flutter::Plugin {
  public:
+    const int MEDIA_TYPE_IMAGE = 1;
+    const int MEDIA_TYPE_AUDIO = 2;
+    const int MEDIA_TYPE_VIDEO = 3;
   static void RegisterWithRegistrar(flutter::PluginRegistrarWindows *registrar);
 
   PhotoManagerPlugin();
@@ -24,6 +28,7 @@ class PhotoManagerPlugin : public flutter::Plugin {
   void HandleMethodCall(
       const flutter::MethodCall<flutter::EncodableValue> &method_call,
       std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
+  void GetAssetsByRange(std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
 };
 
 }  // namespace photo_manager

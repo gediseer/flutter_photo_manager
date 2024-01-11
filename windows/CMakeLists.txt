@@ -18,6 +18,7 @@ set(PLUGIN_NAME "photo_manager_plugin")
 
 # Any new source files that you add to the plugin should be added here.
 list(APPEND PLUGIN_SOURCES
+  "logger.h"
   "photo_manager_plugin.cpp"
   "photo_manager_plugin.h"
 )
@@ -44,9 +45,16 @@ target_compile_definitions(${PLUGIN_NAME} PRIVATE FLUTTER_PLUGIN_IMPL)
 
 # Source include directories and library dependencies. Add any plugin-specific
 # dependencies here.
+# add opencv deps
+set(OpenCV_DIR "E:/OpenCV/opencv/build")
+find_package(OpenCV REQUIRED)
+# add opencv .h and lib path
+include_directories(${OpenCV_INCLUDE_DIRS})
+link_directories(${OpenCV_LIBRARY_DIRS})
+
 target_include_directories(${PLUGIN_NAME} INTERFACE
   "${CMAKE_CURRENT_SOURCE_DIR}/include")
-target_link_libraries(${PLUGIN_NAME} PRIVATE flutter flutter_wrapper_plugin)
+target_link_libraries(${PLUGIN_NAME} PRIVATE flutter flutter_wrapper_plugin ${OpenCV_LIBRARIES})
 
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
