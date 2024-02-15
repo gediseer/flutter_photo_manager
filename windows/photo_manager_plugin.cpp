@@ -100,7 +100,7 @@ namespace photo_manager {
 				std::string file_extension = entry.path().extension().string();
 
 				// Check if the file is an image or video by its extension
-				if (file_extension == ".jpg" || file_extension == ".png" ||
+				if (file_extension == ".jpg" || file_extension == ".png" || file_extension == ".bmp" || file_extension == ".jpeg" ||
 					file_extension == ".mp4" || file_extension == ".avi") {
 
 					flutter::EncodableMap element;
@@ -132,14 +132,14 @@ namespace photo_manager {
 					time_t modifyTime_t = fileStat.st_mtime;
 					modifyTime = modifyTime.substr(0, modifyTime.length() - 1);
 
-					cv::Mat image = cv::imread(file_path);
-					// Check if the file is an image
-					if (image.empty()) {
-						std::cout << "image file empty " << file_path << std::endl;
-						continue;
-					}
-					int width = image.cols; //image.cols;
-					int height = image.rows; // image.rows;
+					//cv::Mat image = cv::imread(file_path);
+					//// Check if the file is an image
+					//if (image.empty()) {
+					//	std::cout << "image file empty " << file_path << std::endl;
+					//	continue;
+					//}
+					int width = 0;//image.cols; //image.cols;
+					int height = 0;//image.rows; // image.rows;
 					//6 mimetype
 					std::string mimetype = "memetype"; // ImageInfo::getImageMimeType(image);
 					std::cout << "image dir: " << file_path << std::endl;
