@@ -2,9 +2,12 @@
 // Use of this source code is governed by an Apache license that can be found
 // in the LICENSE file.
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import '../../photo_manager.dart';
 import '../filter/base_filter.dart';
 import '../filter/path_filter.dart';
 import '../internal/editor.dart';
@@ -220,6 +223,32 @@ class PhotoManager {
       filterOption: filterOption,
       type: type,
     );
+  }
+
+  static Future<List<AssetEntity>> getWindowsFilesAsAssetEntities(String destination) async {
+    Directory dir = Directory(destination);
+    List<File> files = dir.listSync().where((item) => item is File).cast<File>().toList();
+
+    List<AssetEntity> assets = [];
+    for (var file in files) {
+      // Get the file stats
+      FileStat stats = await file.stat();
+
+      // The returned dates are in DateTime format, so we convert them to seconds
+      int creationDateInSeconds = stats.changed.millisecondsSinceEpoch ~/ 1000;
+      int modificationDateInSeconds = stats.modified.millisecondsSinceEpoch ~/ 1000;
+
+      assets.add(AssetEntity(
+        id: file.path,
+        typeInt: AssetEntityUtils.getTypeIntFromTitle(file.path),
+        createDateSecond: creationDateInSeconds,
+        modifiedDateSecond: modificationDateInSeconds,
+        width: 0, // You need to set the width yourself
+        height: 0, // You need to set the height yourself
+        title: file.path,
+      ));
+    }
+    return assets;
   }
 
   /// Get the asset list with page.

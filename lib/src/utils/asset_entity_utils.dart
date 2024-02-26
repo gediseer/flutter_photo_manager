@@ -22,7 +22,11 @@ class AssetEntityUtils {
   }
 
   static getTypeInt(AssetEntity rawEntity) {
-    var extension = path.extension(rawEntity.title!).toLowerCase();
+    getTypeIntFromTitle(rawEntity.title!);
+  }
+
+  static getTypeIntFromTitle(String title) {
+    var extension = path.extension(title).toLowerCase();
 
     var imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
     var videoExtensions = ['.mp4', '.avi', '.mov', '.flv', '.wmv'];

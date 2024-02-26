@@ -32,3 +32,4 @@ export 'src/types/thumbnail.dart';
 export 'src/types/types.dart';
 
 export 'src/utils/column_utils.dart';
+export 'src/utils/asset_entity_utils.dart';

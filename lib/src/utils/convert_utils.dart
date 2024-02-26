@@ -37,52 +37,53 @@ class ConvertUtils {
     }
     return result;
   }
-
+  // not for Windows
   static List<AssetEntity> convertToAssetList(Map<String, dynamic> data) {
     final List<AssetEntity> result = <AssetEntity>[];
     final List<Map<dynamic, dynamic>> list =
         (data['data'] as List<dynamic>).cast<Map<dynamic, dynamic>>();
     for (final Map<dynamic, dynamic> item in list) {
-      if (Platform.isWindows) {
-        final AssetEntity rawEntity = AssetEntity(
-          id: item['id'] as String,
-          typeInt: item['type'] as int,
-          width: item['width'] as int,
-          height: item['height'] as int,
-          duration: item['duration'] as int? ?? 0,
-          orientation: item['orientation'] as int? ?? 0,
-          isFavorite: item['favorite'] as bool? ?? false,
-          title: item['title'] as String? ?? "",
-          subtype: item['subtype'] as int? ?? 0,
-          createDateSecond: item['createDt'] as int?,
-          modifiedDateSecond: item['modifiedDt'] as int?,
-          relativePath: item['relativePath'] as String?,
-          latitude: item['lat'] as double?,
-          longitude: item['lng'] as double?,
-          mimeType: item['mimeType'] as String?,
-        );
-
-        final AssetEntity entity = AssetEntity(
-          id: AssetEntityUtils.generateUniqueId(rawEntity),
-          typeInt: AssetEntityUtils.getTypeInt(rawEntity),
-          width: rawEntity.width,
-          height: rawEntity.height,
-          duration: AssetEntityUtils.getDuration(rawEntity),
-          orientation: rawEntity.orientation,
-          isFavorite: rawEntity.isFavorite,
-          title: rawEntity.title,
-          subtype: rawEntity.subtype,
-          createDateSecond: rawEntity.createDateSecond,
-          modifiedDateSecond: rawEntity.modifiedDateSecond,
-          relativePath: rawEntity.relativePath,
-          latitude: rawEntity.latitude,
-          longitude: rawEntity.longitude,
-          mimeType: rawEntity.mimeType,
-        );
-        result.add(entity);
-      } else {
+      // if (Platform.isWindows) {
+      //   final AssetEntity rawEntity = AssetEntity(
+      //     id: item['id'] as String,
+      //     typeInt: item['type'] as int,
+      //     width: item['width'] as int,
+      //     height: item['height'] as int,
+      //     duration: item['duration'] as int? ?? 0,
+      //     orientation: item['orientation'] as int? ?? 0,
+      //     isFavorite: item['favorite'] as bool? ?? false,
+      //     title: item['title'] as String? ?? "",
+      //     subtype: item['subtype'] as int? ?? 0,
+      //     createDateSecond: item['createDt'] as int?,
+      //     modifiedDateSecond: item['modifiedDt'] as int?,
+      //     relativePath: item['relativePath'] as String?,
+      //     latitude: item['lat'] as double?,
+      //     longitude: item['lng'] as double?,
+      //     mimeType: item['mimeType'] as String?,
+      //   );
+      //
+      //   final AssetEntity entity = AssetEntity(
+      //     id: AssetEntityUtils.generateUniqueId(rawEntity),
+      //     typeInt: AssetEntityUtils.getTypeInt(rawEntity),
+      //     width: rawEntity.width,
+      //     height: rawEntity.height,
+      //     duration: AssetEntityUtils.getDuration(rawEntity),
+      //     orientation: rawEntity.orientation,
+      //     isFavorite: rawEntity.isFavorite,
+      //     title: rawEntity.title,
+      //     subtype: rawEntity.subtype,
+      //     createDateSecond: rawEntity.createDateSecond,
+      //     modifiedDateSecond: rawEntity.modifiedDateSecond,
+      //     relativePath: rawEntity.relativePath,
+      //     latitude: rawEntity.latitude,
+      //     longitude: rawEntity.longitude,
+      //     mimeType: rawEntity.mimeType,
+      //   );
+      //   result.add(entity);
+      // } else
+      //{
         result.add(convertMapToAsset(item.cast<String, dynamic>()));
-      }
+      //}
     }
     return result;
   }
