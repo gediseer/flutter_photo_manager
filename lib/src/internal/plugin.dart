@@ -425,8 +425,8 @@ class PhotoManagerPlugin with BasePlugin, IosPlugin, AndroidPlugin {
     AssetEntity entity, {
     int subtype = 0,
   }) async {
-    assert(Platform.isAndroid || Platform.isIOS || Platform.isMacOS);
-    if (Platform.isAndroid) {
+    assert(Platform.isAndroid || Platform.isIOS || Platform.isMacOS || Platform.isWindows);
+    if (Platform.isAndroid || Platform.isWindows) {
       return entity.title!;
     }
     if (Platform.isIOS || Platform.isMacOS) {
